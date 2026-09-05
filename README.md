@@ -17,7 +17,7 @@
 
 ## 📖 项目简介
 
-`tbe-client` 是 [TheBoringEnglish](https://theboringenglish.com) 官方推出的现代化桌面客户端。与内部管理工具不同，本项目专为**所有普通终端用户**设计打造，旨在为用户提供：
+`TBE-client` 是 [TheBoringEnglish](https://theboringenglish.com) 官方推出的现代化桌面客户端。与内部管理工具不同，本项目专为**所有普通终端用户**设计打造，旨在为用户提供：
 
 - 🎙️ **本地算力发音工坊 (TTS Studio)**：本地极速合成母语级纯正美音/英音，支持离线 AI 神经模型与在线高保真音色；
 - 👣 **学习足迹一键出片 (Footprints & Remotion)**：同步您在 TheBoringEnglish 的日常文章精读、跟读对话与生词足迹，一键生成动态 Remotion 视频工程并在本地浏览器实时预览；
@@ -60,8 +60,8 @@
 
 #### 1. 克隆代码仓库
 ```bash
-git clone https://github.com/TheBoringEnglish/tbe-client.git
-cd tbe-client
+git clone https://github.com/TheBoringEnglish/TBE-client.git
+cd TBE-client
 ```
 
 #### 2. 安装 Python 依赖
