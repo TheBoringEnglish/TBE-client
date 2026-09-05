@@ -76,7 +76,7 @@ class TTSView(QWidget):
         header_text.setSpacing(4)
 
         title = QLabel("🎙️ 本地发音工坊 (TTS Studio)")
-        title.setStyleSheet("font-size: 20px; font-weight: 700; color: #F1F5F9;")
+        title.setStyleSheet("font-size: 20px; font-weight: 700; letter-spacing: -0.4px;")
         header_text.addWidget(title)
 
         subtitle = QLabel("输入任意英语句子或段落，秒级合成母语者级纯正发音，支持离线 AI 与高保真神经音色")
@@ -92,7 +92,7 @@ class TTSView(QWidget):
         # 预设范例选择栏
         preset_row = QHBoxLayout()
         lbl_preset = QLabel("💡 试听预设范例:")
-        lbl_preset.setStyleSheet("color: #94A3B8; font-weight: 500;")
+        lbl_preset.setStyleSheet("color: #94A3B8; font-weight: 500; font-size: 12.5px;")
         preset_row.addWidget(lbl_preset)
 
         for title_str, text_str in PRESET_SNIPPETS:

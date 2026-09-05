@@ -37,14 +37,18 @@ class RemotionBridge:
     def get_projects(self) -> List[Dict[str, Any]]:
         """获取可用的 Remotion 模板工程列表"""
         try:
-            resp = requests.get(f"{self.service_url}/api/remotion/projects", timeout=3.0)
+            resp = requests.get(f"{self.service_url}/api/remotion/projects", timeout=1.5)
             if resp.status_code == 200:
                 data = resp.json()
                 return data.get("projects", [])
-        except Exception as e:
-            print(f"[RemotionBridge] 获取工程列表异常: {e}")
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+            # 服务未拉起属于正常离线状态，静默使用预设模板
+            pass
+        except Exception:
+            pass
 
         # 默认预设工程模板兜底（保证离线或断网时界面依然展示）
+
         return [
             {"id": "remotion_text1", "name": "纯文字动画模板 (text1)", "port": 3000, "is_running": False},
             {"id": "remotion_video1", "name": "动态视频背景模板 (video1)", "port": 3001, "is_running": False},

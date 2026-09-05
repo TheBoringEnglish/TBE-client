@@ -67,10 +67,16 @@ def main():
         f"--paths={root_dir}",
     ]
 
-    # 添加图标（如果存在）
+    # 添加图标与内置静态资产
     icon_path = os.path.join(root_dir, "assets", "icon.ico")
     if os.path.exists(icon_path):
         cmd.append(f"--icon={icon_path}")
+
+    # 打包 assets 文件夹中的图标与静态素材
+    assets_dir = os.path.join(root_dir, "assets")
+    if os.path.exists(assets_dir):
+        sep = ";" if sys.platform.startswith("win") else ":"
+        cmd.append(f"--add-data={assets_dir}{sep}assets")
 
     # 主入口文件
     entry_point = os.path.join(root_dir, "src", "main.py")

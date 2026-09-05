@@ -14,6 +14,7 @@ if _PROJECT_ROOT not in sys.path:
 if _CURRENT_DIR not in sys.path:
     sys.path.insert(0, _CURRENT_DIR)
 
+import ctypes
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
@@ -22,22 +23,29 @@ from src.app import MainWindow
 
 
 def main():
-    # 启用高 DPI 缩放支持
-    if hasattr(Qt, "AA_EnableHighDpiScaling"):
-        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-    if hasattr(Qt, "AA_UseHighDpiPixmaps"):
-        QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
+    # Windows 任务栏原生图标与分组标识 (AppUserModelID)
+    if sys.platform == "win32":
+        try:
+            myappid = "theboringenglish.client.desktop.v1"
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+        except Exception:
+            pass
 
     app = QApplication(sys.argv)
     app.setApplicationName("TheBoringEnglish Client")
     app.setOrganizationName("TheBoringEnglish")
 
-    # 尝试设置应用图标（如果存在）
+    # 全局设置应用图标（确保任务栏和右键图标均正常展示）
     icon_path = os.path.join(_PROJECT_ROOT, "assets", "icon.ico")
+    if not os.path.exists(icon_path):
+        icon_path = os.path.join(_PROJECT_ROOT, "assets", "icon.png")
     if os.path.exists(icon_path):
-        app.setWindowIcon(QIcon(icon_path))
+        app_icon = QIcon(icon_path)
+        app.setWindowIcon(app_icon)
 
     window = MainWindow()
+    if os.path.exists(icon_path):
+        window.setWindowIcon(QIcon(icon_path))
     window.show()
 
     sys.exit(app.exec())

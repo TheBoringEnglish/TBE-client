@@ -36,13 +36,13 @@ class StatCard(QFrame):
 
         # 主指标数值
         self.lbl_value = QLabel(value)
-        self.lbl_value.setStyleSheet(f"color: #F1F5F9; font-size: 26px; font-weight: 700; letter-spacing: -0.5px;")
+        self.lbl_value.setStyleSheet("font-size: 24px; font-weight: 700; letter-spacing: -0.5px;")
         lay.addWidget(self.lbl_value)
 
         # 底部描述
         if subtext:
             self.lbl_subtext = QLabel(subtext)
-            self.lbl_subtext.setStyleSheet("color: #64748B; font-size: 11.5px;")
+            self.lbl_subtext.setStyleSheet("color: #64748B; font-size: 11.5px; opacity: 0.85;")
             lay.addWidget(self.lbl_subtext)
         else:
             self.lbl_subtext = None

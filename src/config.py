@@ -19,12 +19,17 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "server_url": "https://theboringenglish.com",
     "token": "",
     "user_info": {
+        "id": 0,
         "username": "",
         "nickname": "",
         "avatar": "",
-        "points": 0,
-        "is_admin": False
+        "is_vip": False,
+        "is_super_admin": False
     },
+
+    # 国际化与首次启动
+    "language": "zh_CN",  # "zh_CN" or "en_US"
+    "is_first_run": True,
 
     # Remotion 视频服务配置
     "remotion_url": "http://localhost:6402",
@@ -38,7 +43,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "tts_speed": 1.0,
     "tts_pitch": "+0Hz",
 
-    # 算力挂机设置
+    # 本地发音引擎挂机设置
     "compute_enabled": False,
     "compute_threads": 2,
     "auto_start_compute": False,

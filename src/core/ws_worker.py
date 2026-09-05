@@ -59,42 +59,51 @@ class ComputeWorkerThread(QThread):
         server_url = config.get("server_url", "https://theboringenglish.com").rstrip("/")
         token = config.get("token", "")
 
-        # 派生 WebSocket 协议
-        ws_url = server_url.replace("http://", "ws://").replace("https://", "wss://") + "/ws/compute"
+        # 优先接入标准的 /ws/client 端口
+        base_ws = server_url.replace("http://", "ws://").replace("https://", "wss://")
+        ws_url = f"{base_ws}/ws/client"
 
         import websockets
 
         retry_interval = 3
         while self._is_running:
             try:
-                self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] 正在连入算力调度总线: {ws_url}...")
-                headers = {}
-                if token:
-                    headers["Authorization"] = f"Bearer {token}"
-
+                self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] 正在连入本地发音调度中心: {ws_url}...")
+                
                 async with websockets.connect(
                     ws_url,
-                    extra_headers=headers,
                     ping_interval=20,
                     ping_timeout=20,
                     close_timeout=5
                 ) as ws:
-                    self.status_signal.emit("running", "算力在线 (挂机运行中)")
-                    self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] ✅ 握手成功！节点已加入分布式算力网")
+                    # 握手认证
+                    auth_frame = {"event": "auth", "token": token}
+                    await ws.send(json.dumps(auth_frame))
+
+                    self.status_signal.emit("running", "发音引擎运行中 (就绪)")
+                    self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] ✅ 握手成功！本地发音引擎已就绪")
+                    # 修复：连接成功后重置重连间隔，避免下次断线从最大値开始
+                    retry_interval = 3
 
                     while self._is_running:
                         try:
                             msg_str = await asyncio.wait_for(ws.recv(), timeout=30.0)
                             data = json.loads(msg_str)
-                            action = data.get("action") or data.get("type")
+                            event = data.get("event") or data.get("action")
 
-                            if action == "ping":
-                                await ws.send(json.dumps({"action": "pong", "time": time.time()}))
-                            elif action == "task":
-                                await self._handle_task(ws, data)
+                            if event == "ping":
+                                await ws.send(json.dumps({"event": "pong", "time": time.time()}))
+                            elif event in ("task_submit", "task"):
+                                task_payload = data.get("data") or data
+                                await self._handle_task(ws, task_payload)
+                            elif event == "auth_ok":
+                                self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] 🔐 账号安全鉴权通过")
+                            elif event == "auth_fail":
+                                reason = data.get("reason") or data.get("message")
+                                self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] ⚠️ 鉴权提示: {reason} (可在设置中关联账户)")
                         except asyncio.TimeoutError:
                             # 30秒无消息，主动探测心跳
-                            await ws.send(json.dumps({"action": "heartbeat", "time": time.time()}))
+                            await ws.send(json.dumps({"event": "ping", "time": time.time()}))
                         except Exception as inner_e:
                             if not self._is_running:
                                 break
@@ -107,14 +116,13 @@ class ComputeWorkerThread(QThread):
                 self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] ⚠️ 调度连接异常: {conn_err}，等待重试...")
                 await asyncio.sleep(retry_interval)
                 retry_interval = min(retry_interval * 1.5, 15)
-
     async def _handle_task(self, ws, task_data: dict):
-        """处理下发的算力代跑任务（如批量 TTS 生成）"""
+        """处理下发的语音发音任务"""
         task_id = task_data.get("task_id", "unknown")
-        task_type = task_data.get("task_type", "tts")
+        task_type = task_data.get("type") or task_data.get("task_type", "tts")
         payload = task_data.get("payload", {})
 
-        self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] 📥 领取新任务: [{task_type.upper()}] ID={task_id}")
+        self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] 📥 领取发音任务: [{task_type.upper()}] ID={task_id}")
 
         if task_type == "tts":
             text = payload.get("text", "")
@@ -128,22 +136,28 @@ class ComputeWorkerThread(QThread):
             if audio_bytes:
                 b64_audio = base64.b64encode(audio_bytes).decode("utf-8")
                 reply = {
-                    "action": "task_result",
-                    "task_id": task_id,
-                    "success": True,
-                    "cost_time": elapsed,
-                    "audio_b64": b64_audio
+                    "event": "task_result",
+                    "data": {
+                        "task_id": task_id,
+                        "status": "success",
+                        "cost_time": elapsed,
+                        "payload": {
+                            "audio_base64": b64_audio
+                        }
+                    }
                 }
                 await ws.send(json.dumps(reply))
                 self.total_completed += 1
-                self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] ✨ 任务完成: {task_id} (耗时: {elapsed}s)")
+                self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] ✨ 发音合成完成: {task_id} (耗时: {elapsed}s)")
                 self.task_done_signal.emit({"id": task_id, "cost": elapsed, "total": self.total_completed})
             else:
                 reply = {
-                    "action": "task_result",
-                    "task_id": task_id,
-                    "success": False,
-                    "error": err or "合成失败"
+                    "event": "task_result",
+                    "data": {
+                        "task_id": task_id,
+                        "status": "failed",
+                        "error": err or "合成失败"
+                    }
                 }
                 await ws.send(json.dumps(reply))
-                self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] ❌ 任务失败: {task_id}, 原因: {err}")
+                self.log_signal.emit(f"[{time.strftime('%H:%M:%S')}] ❌ 发音合成失败: {task_id}, 原因: {err}")
