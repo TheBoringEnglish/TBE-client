@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+credentials.json
+token.json
+secrets.json
+
+# Local Configuration & Data (Stored in ~/.tbe_client_config.json, not repo)
+*.config.json
+.tbe_client_config.json
+
+# Audio & Media Outputs
+*.wav
+*.mp3
+*.mp4
+*.m4a
+*.webm
+temp_audio/
+output/
+outputs/
+cache/
+
+# AI Model Files (Do not commit gigabyte weights to Git)
+models/
+*.onnx
+*.bin
+*.pth
+*.pt
+*.safetensors
+
+# PyInstaller / Packaging Output
+*.spec
+dist/
+build/
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

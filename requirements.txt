@@ -1,0 +1,17 @@
+# 核心 GUI 依赖
+PySide6>=6.5.0
+
+# 音频与本地 TTS 合成
+edge-tts>=6.1.0
+soundfile>=0.12.0
+
+# 网络通信与 API 请求
+requests>=2.31.0
+websockets>=11.0.0
+aiohttp>=3.8.0
+
+# 系统与工具
+psutil>=5.9.0
+
+# 可选离线 AI 神经语音 (建议在支持机器安装)
+# kokoro-onnx>=0.3.0
