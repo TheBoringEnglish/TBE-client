@@ -9,9 +9,16 @@ import sys
 import shutil
 import subprocess
 
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 
 def run_command(cmd_list):
-    print(f"[执行] {' '.join(cmd_list)}")
+    print(f"[Run] {' '.join(str(x) for x in cmd_list)}")
     subprocess.check_call(cmd_list)
 
 
@@ -19,9 +26,9 @@ def main():
     root_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(root_dir)
 
-    print("═══════════════════════════════════════════════════════════════")
-    print("      TheBoringEnglish 桌面客户端 (TBE-Client) 一键打包工具      ")
-    print("═══════════════════════════════════════════════════════════════")
+    print("===============================================================")
+    print("      TheBoringEnglish Client (TBE-Client) Build Tool          ")
+    print("===============================================================")
 
     # 1. 检查 PyInstaller
     try:
@@ -44,7 +51,9 @@ def main():
 
     # 3. 构造 PyInstaller 参数
     cmd = [
-        "pyinstaller",
+        sys.executable,
+        "-m",
+        "PyInstaller",
         "--noconfirm",
         "--clean",
         "--onefile",       # 单文件便携版
@@ -52,11 +61,13 @@ def main():
         "--name=TBE-Client",
         # 排除多余重型计算库以极大幅度缩减可执行文件体积
         "--exclude-module=torch",
+        "--exclude-module=torchvision",
         "--exclude-module=tensorflow",
         "--exclude-module=scipy",
         "--exclude-module=matplotlib",
         "--exclude-module=pandas",
         "--exclude-module=notebook",
+        "--exclude-module=tensorrt",
         # 显式包含网络与音频隐式依赖
         "--hidden-import=edge_tts",
         "--hidden-import=websockets",
@@ -82,21 +93,20 @@ def main():
     entry_point = os.path.join(root_dir, "src", "main.py")
     cmd.append(entry_point)
 
-    print("\n[编译] 开始通过 PyInstaller 编译独立可执行程序...\n")
+    print("\n[Build] Running PyInstaller build command...\n")
     try:
         run_command(cmd)
 
         exe_name = "TBE-Client.exe" if sys.platform.startswith("win") else "TBE-Client"
         final_exe_path = os.path.join(dist_dir, exe_name)
 
-        print("\n═══════════════════════════════════════════════════════════════")
-        print("🎉 [成功] 客户端单文件 EXE 编译打包完成！")
-        print(f"📦 程序路径: {final_exe_path}")
-        print("💡 您可以直接将此文件分发给任意用户，双击即可直接运行使用！")
-        print("═══════════════════════════════════════════════════════════════\n")
+        print("\n===============================================================")
+        print("[SUCCESS] Client standalone EXE build completed successfully!")
+        print(f"[PACKAGE] Executable path: {final_exe_path}")
+        print("===============================================================\n")
 
     except Exception as e:
-        print(f"\n❌ [错误] 编译打包失败: {e}")
+        print(f"\n[ERROR] Build failed: {e}")
         sys.exit(1)
 
 
