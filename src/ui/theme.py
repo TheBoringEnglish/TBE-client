@@ -41,25 +41,25 @@ class Palette:
     }
 
     LIGHT = {
-        "bg_app": "#F4F6F9",
+        "bg_app": "#F8FAFC",
         "bg_header": "#FFFFFF",
         "bg_sidebar": "#FFFFFF",
         "bg_card": "#FFFFFF",
-        "bg_card_hover": "#F8FAFC",
-        "bg_pill_container": "#ECEFF3",
+        "bg_card_hover": "#F1F5F9",
+        "bg_pill_container": "#F1F5F9",
         "bg_pill_active": "#0F172A",
         "text_pill_active": "#FFFFFF",
         "bg_input": "#FFFFFF",
         "border": "#E2E8F0",
-        "border_focus": "#F97316",
-        "border_subtle": "#EDF2F7",
+        "border_focus": "#EA580C",
+        "border_subtle": "#F1F5F9",
         "text_main": "#0F172A",
         "text_sub": "#475569",
-        "text_muted": "#94A3B8",
-        "primary": "#F97316",
-        "primary_hover": "#EA580C",
-        "primary_pressed": "#C2410C",
-        "primary_light": "rgba(249, 115, 22, 0.12)",
+        "text_muted": "#64748B",
+        "primary": "#EA580C",
+        "primary_hover": "#C2410C",
+        "primary_pressed": "#9A3412",
+        "primary_light": "rgba(234, 88, 12, 0.10)",
         "success": "#059669",
         "success_bg": "#ECFDF5",
         "warning": "#D97706",
@@ -104,9 +104,9 @@ def generate_qss(is_dark: bool = True) -> str:
     /* 主导航胶囊按钮 */
     QPushButton.navPill {{
         border: none;
-        border-radius: 17px;
-        padding: 6px 18px;
-        font-size: 13px;
+        border-radius: 14px;
+        padding: 4px 14px;
+        font-size: 12.5px;
         font-weight: 500;
         color: {p['text_sub']};
         background-color: transparent;
@@ -126,9 +126,9 @@ def generate_qss(is_dark: bool = True) -> str:
     /* 二级子导航胶囊按钮 (Sub Tab Pill) */
     QPushButton.subTabPill {{
         border: none;
-        border-radius: 15px;
-        padding: 5px 15px;
-        font-size: 12.5px;
+        border-radius: 13px;
+        padding: 4px 12px;
+        font-size: 12px;
         font-weight: 500;
         color: {p['text_sub']};
         background-color: transparent;
@@ -148,15 +148,15 @@ def generate_qss(is_dark: bool = True) -> str:
     /* 顶部右侧圆形/胶囊工具小按钮 */
     QPushButton.toolCircleBtn {{
         border: 1px solid {p['border']};
-        border-radius: 16px;
+        border-radius: 13px;
         background-color: {p['bg_pill_container']};
         color: {p['text_main']};
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
-        min-width: 32px;
-        max-width: 32px;
-        min-height: 32px;
-        max-height: 32px;
+        min-width: 26px;
+        max-width: 26px;
+        min-height: 26px;
+        max-height: 26px;
         padding: 0px;
     }}
 
@@ -167,13 +167,13 @@ def generate_qss(is_dark: bool = True) -> str:
 
     QPushButton.toolPillBtn {{
         border: 1px solid {p['border']};
-        border-radius: 16px;
+        border-radius: 12px;
         background-color: {p['bg_pill_container']};
         color: {p['text_main']};
-        font-size: 12px;
+        font-size: 11.5px;
         font-weight: 700;
-        padding: 4px 12px;
-        height: 24px;
+        padding: 2px 9px;
+        height: 22px;
     }}
 
     QPushButton.toolPillBtn:hover {{
@@ -185,35 +185,31 @@ def generate_qss(is_dark: bool = True) -> str:
     QFrame.card {{
         background-color: {p['bg_card']};
         border: 1px solid {p['border']};
-        border-radius: 16px;
+        border-radius: 12px;
     }}
 
     QFrame.card:hover {{
-        border-color: {p['border_subtle']};
+        border-color: rgba(249, 115, 22, 0.45);
+        background-color: {p['bg_card_hover']};
     }}
 
     /* 社交/功能徽章小卡片 (About/Community Grid Card) */
     QFrame.socialCard {{
         background-color: {p['bg_card']};
         border: 1px solid {p['border']};
-        border-radius: 14px;
-    }}
-
-    QFrame.socialCard:hover {{
-        background-color: {p['bg_card_hover']};
-        border-color: {p['primary']};
+        border-radius: 10px;
     }}
 
     /* 足迹视频生成历史记录卡片 (Footprint Generated Video Card) */
     QFrame.recordCard {{
         background-color: {p['bg_card']};
         border: 1px solid {p['border']};
-        border-radius: 14px;
+        border-radius: 12px;
     }}
 
     QFrame.recordCard:hover {{
         background-color: {p['bg_card_hover']};
-        border-color: {p['border_subtle']};
+        border-color: {p['primary']};
     }}
 
     /* ════════════ 按钮设计系统 ════════════ */
@@ -221,10 +217,10 @@ def generate_qss(is_dark: bool = True) -> str:
         background-color: {p['primary']};
         color: #FFFFFF;
         border: 1px solid {p['primary']};
-        border-radius: 18px;
-        padding: 8px 20px;
+        border-radius: 16px;
+        padding: 6px 16px;
         font-weight: 600;
-        font-size: 13px;
+        font-size: 12.5px;
     }}
 
     QPushButton.btnPrimary:hover {{
@@ -235,17 +231,17 @@ def generate_qss(is_dark: bool = True) -> str:
     QPushButton.btnPrimary:pressed {{
         background-color: {p['primary_pressed']};
         border-color: {p['primary_pressed']};
-        padding-top: 9px;
+        padding-top: 7px;
     }}
 
     QPushButton.btnSuccess {{
         background-color: {p['success']};
         color: #FFFFFF;
         border: 1px solid {p['success']};
-        border-radius: 16px;
-        padding: 6px 18px;
+        border-radius: 14px;
+        padding: 5px 14px;
         font-weight: 600;
-        font-size: 13px;
+        font-size: 12.5px;
     }}
 
     QPushButton.btnSuccess:hover {{
@@ -263,10 +259,10 @@ def generate_qss(is_dark: bool = True) -> str:
         background-color: {p['bg_pill_container']};
         color: {p['text_main']};
         border: 1px solid {p['border']};
-        border-radius: 16px;
-        padding: 7px 16px;
+        border-radius: 14px;
+        padding: 5px 14px;
         font-weight: 500;
-        font-size: 13px;
+        font-size: 12.5px;
     }}
 
     QPushButton.btnSecondary:hover {{
@@ -278,44 +274,72 @@ def generate_qss(is_dark: bool = True) -> str:
         background-color: {p['border']};
     }}
 
+    /* ════════════ TTS 引擎切换胶囊 ════════════ */
+    QPushButton.enginePill {{
+        border: 1px solid {p['border']};
+        border-radius: 14px;
+        padding: 4px 14px;
+        font-size: 12px;
+        font-weight: 500;
+        color: {p['text_sub']};
+        background-color: transparent;
+    }}
+
+    QPushButton.enginePill:hover {{
+        color: {p['text_main']};
+        border-color: {p['primary']};
+    }}
+
+    QPushButton.enginePill:checked {{
+        background-color: {p['primary']};
+        color: #FFFFFF;
+        border-color: {p['primary']};
+        font-weight: 600;
+    }}
+
     /* ════════════ 输入框与富文本 ════════════ */
     QLineEdit, QTextEdit, QPlainTextEdit {{
         background-color: {p['bg_input']};
         color: {p['text_main']};
         border: 1px solid {p['border']};
         border-radius: 8px;
-        padding: 8px 12px;
+        padding: 6px 10px;
         selection-background-color: {p['primary']};
         selection-color: #FFFFFF;
     }}
 
     QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus {{
-        border: 1px solid {p['border_focus']};
+        border: 1px solid {p['primary']};
         background-color: {p['bg_input']};
     }}
 
     QLineEdit:disabled, QTextEdit:disabled {{
-        background-color: {p['border_subtle']};
+        background-color: {p['bg_pill_container']};
         color: {p['text_muted']};
     }}
 
     /* 下拉选择框 */
     QComboBox {{
-        background-color: {p['bg_card']};
+        background-color: {p['bg_input']};
         color: {p['text_main']};
         border: 1px solid {p['border']};
         border-radius: 8px;
-        padding: 6px 12px;
+        padding: 5px 10px;
         min-width: 140px;
+        font-size: 12.5px;
     }}
 
     QComboBox:hover {{
-        border-color: {p['border_focus']};
+        border-color: {p['primary']};
+    }}
+
+    QComboBox:focus {{
+        border-color: {p['primary']};
     }}
 
     QComboBox::drop-down {{
         border: none;
-        width: 24px;
+        width: 20px;
     }}
 
     QComboBox QAbstractItemView {{

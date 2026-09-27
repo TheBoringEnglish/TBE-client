@@ -42,6 +42,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "tts_voice": "en-US-JennyNeural",
     "tts_speed": 1.0,
     "tts_pitch": "+0Hz",
+    "tts_engine": "edge",  # "edge" or "kokoro"
 
     # 本地发音引擎挂机设置
     "compute_enabled": False,
@@ -51,8 +52,8 @@ DEFAULT_CONFIG: Dict[str, Any] = {
 
     # 界面偏好
     "theme": "dark",  # "dark" or "light"
-    "window_width": 1180,
-    "window_height": 780,
+    "window_width": 620,
+    "window_height": 480,
 }
 
 
@@ -136,3 +137,32 @@ class AppConfig:
 
 # 全局单例
 config = AppConfig()
+
+
+def get_asset_path(filename: str) -> str:
+    """获取资源文件路径（兼容源码直接运行与 PyInstaller 打包环境）"""
+    import sys
+    # 1. PyInstaller 运行时解压目录
+    base = getattr(sys, "_MEIPASS", None)
+    if base:
+        p = os.path.join(base, "assets", filename)
+        if os.path.exists(p):
+            return p
+        p_root = os.path.join(base, filename)
+        if os.path.exists(p_root):
+            return p_root
+
+    # 2. 源码环境根目录 assets
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(current_dir)
+    p = os.path.join(project_root, "assets", filename)
+    if os.path.exists(p):
+        return p
+
+    # 3. 可执行文件同级目录 assets
+    exe_dir = os.path.dirname(os.path.abspath(sys.executable))
+    p = os.path.join(exe_dir, "assets", filename)
+    if os.path.exists(p):
+        return p
+
+    return p

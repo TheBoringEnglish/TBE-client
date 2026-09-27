@@ -59,16 +59,16 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         
         # 系统环境与健康体检
         "diag_title": "🔍 本地运行环境诊断与组件自检",
-        "diag_refresh": "🔄 重新检测",
+        "diag_refresh": "重检",
         "doctor_title": "🩺 系统环境与网络健康体检",
-        "doctor_btn": "🩺 环境与网络体检",
-        "doctor_recheck": "🔄 重新体检",
+        "doctor_btn": "体检",
+        "doctor_recheck": "重检",
 
         # 本地发音引擎页面
         "engine_title": "⚡ 本地发音引擎 (Local Speech Engine)",
         "engine_sub": "将本地算力化身高速发音节点，为浏览器与云端精读提供毫秒级高保真原声发音",
-        "engine_start": "▶ 启动发音引擎",
-        "engine_stop": "⏸ 暂停发音引擎",
+        "engine_start": "启动",
+        "engine_stop": "暂停",
         "engine_running": "发音引擎运行中",
         "engine_stopped": "已停止",
         "stat_today_completed": "今日发音句子",
@@ -76,28 +76,28 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "stat_threads": "并发计算线程",
         "console_title": "📋 发音任务调度实时流水日志",
         "autoscroll": "自动滚屏",
-        "clear_log": "清空日志",
+        "clear_log": "清空",
         "tray_hint": "💡 提示：开启后客户端可在系统托盘后台静默运行，无需保持窗口开启。",
 
         # 足迹与出片历史
         "nav_footprints": "🎬  足迹出片历史",
         "fp_title": "🎬 足迹出片记录与管理 (Video History)",
         "fp_sub": "由 theboringenglish.com 网页端精读/跟读足迹调起生成，本地自动归档出片历史，随时回看与重新预览",
-        "fp_sync": "🔄 刷新记录",
-        "fp_open_web_footprints": "🌐 前往网页端学习足迹",
+        "fp_sync": "刷新",
+        "fp_open_web_footprints": "制作",
         "fp_list_title": "已生成视频工程历史档案:",
         "fp_empty_title": "暂无足迹视频生成记录",
         "fp_empty_desc": "在 theboringenglish.com 网页端学习足迹中点击「一键 Remotion 预览」或生成视频，客户端将自动在此归档展示。",
-        "fp_btn_reopen": "🚀 重新拉起浏览器预览",
-        "fp_btn_open_folder": "📁 打开所在工程目录",
-        "fp_btn_delete": "🗑️ 移除记录",
+        "fp_btn_reopen": "预览",
+        "fp_btn_open_folder": "打开",
+        "fp_btn_delete": "删除",
         "fp_total_count": "共 {count} 条历史生成视频",
         "fp_status_ready": "工程就绪",
 
         # 设置中心与二级导航
         "set_title": "⚙️ 系统偏好与账户设置 (Settings)",
         "set_sub": "管理 theboringenglish.com 关联账户、软件语言与高级系统选项",
-        "set_save_all": "💾 保存全部配置",
+        "set_save_all": "保存",
         "tab_general": "通用设置",
         "tab_account": "账号关联",
         "tab_advanced": "高级选项",
@@ -108,10 +108,10 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "acc_user_label": "用户名 / 邮箱:",
         "acc_pass_label": "密码:",
         "acc_token_label": "或者手动粘贴 Token:",
-        "btn_browser_link": "🌐 在浏览器打开官网一键同步",
+        "btn_browser_link": "同步",
         "browser_link_hint": "💡 提示：点击将在默认浏览器打开 theboringenglish.com 登录页，登录成功后会自动免密同步至本客户端。",
-        "btn_login_link": "🔗 一键关联账户",
-        "btn_logout_link": "解除关联",
+        "btn_login_link": "关联",
+        "btn_logout_link": "解绑",
         "acc_vip_badge": "VIP 会员权益已激活",
         "acc_normal_badge": "标准免费用户",
 
@@ -141,7 +141,7 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "about_tg_val": "YouTube Pro",
         "about_repo_title": "开源生态",
         "about_repo_val": "访问仓库",
-        "about_btn_check_update": "🔄 检查新版本",
+        "about_btn_check_update": "更新",
         "about_copyright": "Copyright © 2025-2026 TheBoringEnglish. All rights reserved.",
 
         # 托盘菜单
@@ -157,7 +157,36 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "wiz_desc": "只需简单两步，设置您的首选语言与数据存储路径，即可开启原生母语级英语学习体验。",
         "wiz_lang_sel": "1. 选择界面语言 (Select Language):",
         "wiz_path_sel": "2. 选择模型与数据存储目录:",
-        "wiz_start_btn": "🚀 完成配置并启动客户端",
+        "wiz_start_btn": "完成",
+
+        # 新版看板与任务
+        "dash_tab_youtube": "精选",
+        "dash_tab_news": "新闻",
+        "dash_btn_shuffle": "刷新",
+        "dash_click_to_study": "精读",
+        "dash_import_study": "精读",
+        "btn_start_study": "开始",
+        "dash_guest_user": "未登录访客",
+        "dash_guest_tip": "关联账号同步学习轨迹",
+        "dash_btn_login": "登录",
+        "dash_btn_my_center": "主页",
+        "dash_refresh_tooltip": "刷新数据",
+        "dash_open_portal": "官网",
+        "dash_no_videos": "暂无推荐视频，请稍后刷新",
+        "dash_no_news": "暂无环球新闻资讯，请稍后刷新",
+        "cat_all": "全部",
+        "cat_speeches": "TED 演说",
+        "cat_podcasts": "播客 Talks",
+        "cat_news": "全球新闻",
+        "cat_movies": "影视原声",
+        "cat_music": "音乐歌曲",
+        "cat_kids": "儿童卡通",
+        "nav_scene": "情景对话",
+        "nav_article": "双语精读",
+        "nav_podcast": "原声播客",
+        "nav_vocab": "词汇打卡",
+        "nav_grammar": "核心语法",
+        "nav_speaking": "口语对话",
     },
     "en_US": {
         # Common
@@ -309,6 +338,35 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "wiz_lang_sel": "1. Select Interface Language:",
         "wiz_path_sel": "2. Choose Models & Data Directory:",
         "wiz_start_btn": "🚀 Finish & Launch Client",
+
+        # New Dashboard & Tasks
+        "dash_tab_youtube": "📺 YouTube Picks",
+        "dash_tab_news": "📰 World News",
+        "dash_btn_shuffle": "🎲 Shuffle",
+        "dash_click_to_study": "Study Now ↗",
+        "dash_import_study": "Quick Import ↗",
+        "btn_start_study": "Start",
+        "dash_guest_user": "Guest User",
+        "dash_guest_tip": "Sign in to sync daily learning goals",
+        "dash_btn_login": "Sign In",
+        "dash_btn_my_center": "Profile ↗",
+        "dash_refresh_tooltip": "Refresh Data",
+        "dash_open_portal": "Open Web ↗",
+        "dash_no_videos": "No videos found, please refresh",
+        "dash_no_news": "No news found, please refresh",
+        "cat_all": "All",
+        "cat_speeches": "Speeches",
+        "cat_podcasts": "Podcasts",
+        "cat_news": "News",
+        "cat_movies": "Movies",
+        "cat_music": "Music",
+        "cat_kids": "Kids",
+        "nav_scene": "Daily Scenes",
+        "nav_article": "Articles",
+        "nav_podcast": "Podcasts",
+        "nav_vocab": "Vocabulary",
+        "nav_grammar": "Grammar Tutor",
+        "nav_speaking": "Speaking QA",
     }
 }
 
@@ -327,9 +385,10 @@ class I18nManager:
             config.set("language", lang)
 
     @classmethod
-    def t(cls, key: str, **kwargs) -> str:
+    def t(cls, key: str, default_or_arg: str = None, **kwargs) -> str:
         lang = cls.current_lang()
-        text = TRANSLATIONS.get(lang, {}).get(key) or TRANSLATIONS["zh_CN"].get(key, key)
+        fallback = default_or_arg if isinstance(default_or_arg, str) else key
+        text = TRANSLATIONS.get(lang, {}).get(key) or TRANSLATIONS["zh_CN"].get(key, fallback)
         if kwargs:
             try:
                 return text.format(**kwargs)
@@ -341,3 +400,4 @@ class I18nManager:
 # 全局翻译助手函数
 t = I18nManager.t
 set_language = I18nManager.set_lang
+

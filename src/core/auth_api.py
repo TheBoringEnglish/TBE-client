@@ -121,3 +121,30 @@ class AuthAPI:
     def logout(cls):
         """解除关联 / 退出登录"""
         config.clear_auth()
+
+    @classmethod
+    def create_sso_ticket(cls, token: Optional[str] = None) -> Optional[str]:
+        """
+        向服务端申请一个短期一次性 SSO 兑换票据 (Ticket)
+        60秒内有效，兑换一次即焚，从根本上防止凭据泄露
+        """
+        token = token or config.get("token", "").strip()
+        if not token:
+            return None
+
+        server_url = cls.get_server_url()
+        url = f"{server_url}/api/v1/auth/sso-ticket"
+        headers = {
+            "User-Agent": "TBE-Desktop-Client/1.0",
+            "Authorization": f"Bearer {token}"
+        }
+
+        try:
+            resp = requests.post(url, headers=headers, timeout=3.0)
+            if resp.status_code == 200:
+                data = resp.json() if resp.content else {}
+                if data.get("success"):
+                    return data.get("ticket")
+        except Exception as e:
+            print(f"[SSO] 申请 sso_ticket 失败: {e}")
+        return None

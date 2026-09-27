@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QSystemTrayIcon, QMenu, QStyle, QApplication
 from PySide6.QtGui import QIcon, QAction
 from PySide6.QtCore import QObject, Signal
 from .i18n import t
+from ..config import get_asset_path
 
 
 class AppTrayIcon(QSystemTrayIcon):
@@ -21,10 +22,12 @@ class AppTrayIcon(QSystemTrayIcon):
         # 优先读取应用自定义高质感图标，不存在则使用系统图标兜底
         icon = None
         for candidate in ["icon.ico", "icon.png"]:
-            p = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "assets", candidate)
+            p = get_asset_path(candidate)
             if os.path.exists(p):
-                icon = QIcon(p)
-                break
+                ico_obj = QIcon(p)
+                if not ico_obj.isNull():
+                    icon = ico_obj
+                    break
         if not icon or icon.isNull():
             icon = QApplication.style().standardIcon(QStyle.SP_ComputerIcon)
         
@@ -67,11 +70,15 @@ class AppTrayIcon(QSystemTrayIcon):
         menu.addSeparator()
 
         # 2. 核心功能快捷入口
+        self.act_dashboard = QAction("📊  学习看板", self)
+        self.act_dashboard.triggered.connect(lambda: self.navigate_signal.emit("dashboard"))
+        menu.addAction(self.act_dashboard)
+
         self.act_settings = QAction("⚙️  系统设置", self)
         self.act_settings.triggered.connect(lambda: self.navigate_signal.emit("settings"))
         menu.addAction(self.act_settings)
 
-        self.act_fp = QAction("🎬  出片历史", self)
+        self.act_fp = QAction("🎬  视频制作", self)
         self.act_fp.triggered.connect(lambda: self.navigate_signal.emit("footprints"))
         menu.addAction(self.act_fp)
 
@@ -96,8 +103,9 @@ class AppTrayIcon(QSystemTrayIcon):
         """刷新托盘菜单语言"""
         is_zh = t("save") == "保存"
         self.act_show.setText("🖥️  显示主界面" if is_zh else "🖥️  Show Window")
+        self.act_dashboard.setText("📊  学习看板" if is_zh else "📊  Dashboard")
         self.act_settings.setText("⚙️  系统设置" if is_zh else "⚙️  Settings")
-        self.act_fp.setText("🎬  出片历史" if is_zh else "🎬  Video History")
+        self.act_fp.setText("🎬  视频制作" if is_zh else "🎬  Video Studio")
         self.act_quit.setText("🚪  退出程序" if is_zh else "🚪  Quit")
 
     def _on_activated(self, reason):

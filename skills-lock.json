@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "async-python-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/python-development/skills/async-python-patterns/SKILL.md",
+      "computedHash": "15eb61c8d5c4870d57044cfb199d0aa028d8e1e73e9bb8cb6122da32c76efb77"
+    },
+    "pyqt6-ui-development-rules": {
+      "source": "oimiragieo/agent-studio",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/pyqt6-ui-development-rules/SKILL.md",
+      "computedHash": "7d67c0d5cad20f9631cf6fe659cc6fbadee7dfb6a19f19dbe82a6c283a71d4fb"
+    },
+    "windows-desktop-e2e": {
+      "source": "affaan-m/ecc",
+      "sourceType": "github",
+      "skillPath": "skills/windows-desktop-e2e/SKILL.md",
+      "computedHash": "9a7dad552c7ddcc29e43b65f1c05516a1905f6962fdca56ed6b14f80dad974d9"
+    }
+  }
+}

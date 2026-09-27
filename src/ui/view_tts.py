@@ -159,9 +159,9 @@ class TTSView(QWidget):
         ctrl_row.addStretch()
 
         # 3. 合成动作按钮
-        self.btn_synth = QPushButton("⚡ 立即合成发音")
+        self.btn_synth = QPushButton("合成")
         self.btn_synth.setProperty("class", "btnPrimary")
-        self.btn_synth.setFixedSize(150, 42)
+        self.btn_synth.setFixedSize(90, 36)
         self.btn_synth.clicked.connect(self.start_synthesize)
         ctrl_row.addWidget(self.btn_synth)
 
